@@ -1,0 +1,54 @@
+pragma solidity ^0.4.4;
+import "https://github.com/ethereum/dapp-bin/library/stringUtils.sol";
+contract pilot {
+    /* Public variables of the token */
+    address  public owner;
+    
+    //Data store
+    mapping (bytes32  => mapping (bytes32 => address )) public Hash1;
+    mapping (bytes32  => mapping (bytes32 => address )) public Hash2;
+    mapping (bytes32  => mapping (bytes32 => address )) public Hash3;
+    mapping (address  => bool) public admin;
+    
+    /* Initialization*/
+    function pilot() {
+        owner = msg.sender;
+    }
+
+    function AddHash(bytes32 _hash1, bytes32 _hash2, bytes32 _hash3, bytes32 _token) returns (bool _result){
+       // if (admin[msg.sender]){
+            Hash1[_hash1][_token] = msg.sender;
+            Hash2[_hash2][_token] = msg.sender;
+            Hash3[_hash3][_token] = msg.sender;
+     //   }
+    }
+    
+    function Request(bytes32 _hash1, bytes32 _hash2, bytes32 _hash3, bytes32 _token) constant 
+    returns(bool hres1, bool hres2, bool hres3){
+        if (Hash1[_hash1][_token] == address(0x0)){
+            hres1 = false;
+        } else
+        {   hres1 = true;
+        }
+        if (Hash2[_hash2][_token] == address(0x0)){
+            hres2 = false;
+        } else
+        {   hres2 = true;
+        }
+        if (Hash3[_hash3][_token] == address(0x0)){
+            hres3 = false;
+        } else
+        {   hres3 = true;
+        }
+    }
+    
+   
+    function test() constant returns (string _BIK, string IntID){
+    }
+    
+    
+    /* This unnamed function is called whenever someone tries to send ether to it */
+    function () {
+        throw;     // Prevents accidental sending of ether
+    }
+}
